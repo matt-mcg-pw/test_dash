@@ -1,6 +1,8 @@
 # PW TEST DASH SPECIFIC
 secret_settings.py
 .pyenv-versions
+static/
+*.sw[o|p]
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
