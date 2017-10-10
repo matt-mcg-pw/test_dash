@@ -1,21 +1,43 @@
+"""
+Module to pull xunit reports from 3rd party tools into a Panda's Dataframe used
+to keep historical data on test suite runs.
+"""
+
+
+from glob import iglob
 from pandas import pandas as pd
-from bs4 import BeautifulSoup as bs
 
 
-def _get_html():
-    html = '/var/system-test_reports/allure-html/index.html'
-    with open(html, 'r') as f:
-        soup = bs(f, 'lxml')
-        table = soup.find_all('table')[0]
-    return table
+_PATH_TO_REPORTS = '/var/system-test_reports/allure-html/**/xunit.json'
+_LAST_REPORT_DATE = '19701231'
 
 
-def get_frame():
-    table = _get_html()
-    for row in table.find_all('tr'):
-        cols = row.find_all('td')
-        if len(cols) == 2:
-            vals = {}
-            vals[cols[0]] = cols[1]
-    return pd.DataFrame(list(vals.items()),
-                        columns=['detail link', 'suite fails'])
+def _get_pickled_dataframe():
+    # retrieve the serialized dataframe storing historical data
+    pass
+
+
+def _get_date_last_report():
+    # Get the date of the last report that was recorded in the dataframe
+    pass
+
+
+def _get_allure_reports():
+    # Pull pickled dataframe from db, check for TS of last report seen
+    # Pickled dataframe used for historical data
+    # No need to save anything else, all static reports saved by allure
+    for report in iglob(_PATH_TO_REPORTS, recursive=True):
+        # parse date of report from path
+        # if report date < last report date break
+        pass
+    # Merge with pickled dataframe from db
+
+
+def _get_jenkins_reports():
+    # Placeholder for when we start using Jenkins
+    pass
+
+
+def get_historical_dataframe():
+    # publicly accessible method to get dataframe
+    pass
